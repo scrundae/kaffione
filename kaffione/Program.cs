@@ -36,9 +36,10 @@ namespace kaffione
                     string newans = ans.Replace("_web_obj_download ", "");
                     Console.WriteLine("Attempting to download: " + newans +
                                       "; This might take a bit ranging on the size of the site.\n");
-                    WebClient wc = new System.Net.WebClient();
+                    WebClient wc = new WebClient();
                     wc.Proxy = null;
                     string webData = wc.DownloadString(newans);
+                    //wc.DownloadProgressChanged += ProgressUpdated;
                     Console.WriteLine("Web Objects successfully downloaded: ");
                     Console.WriteLine(webData + "\n");
                     Console.WriteLine("Type Y to copy to coffee.");
@@ -100,6 +101,11 @@ namespace kaffione
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
+        }
+        
+        public static void ProgressUpdated(object o, DownloadProgressChangedEventArgs dpcea)
+        {
+            Console.WriteLine(dpcea.ProgressPercentage + "% completed.");
         }
     }
 }
